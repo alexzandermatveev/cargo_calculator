@@ -16,6 +16,7 @@ import static org.mockito.Mockito.when;
 class PricesRublesPropertiesTest {
 
     public static final BigDecimal PER_KG = BigDecimal.valueOf(50);
+    public static final BigDecimal PER_METER = BigDecimal.valueOf(80);
     public static final BigDecimal MINIMAL = BigDecimal.valueOf(100);
     public static final String RUB = "RUB";
     final CurrencyFactory currencyFactory = mock(CurrencyFactory.class);
@@ -26,7 +27,9 @@ class PricesRublesPropertiesTest {
         properties = new PricesRublesProperties();
         properties.setCurrencyFactory(currencyFactory);
 
+
         properties.setPerKg(PER_KG);
+        properties.setPerCubMeter(PER_METER);
         properties.setMinimal(MINIMAL);
 
         var currency = mock(Currency.class);
@@ -41,6 +44,15 @@ class PricesRublesPropertiesTest {
 
         verify(currencyFactory).create("RUB");
         assertThat(actual.amount()).isEqualByComparingTo(PER_KG);
+        assertThat(actual.currency().getCode()).isEqualTo("RUB");
+    }
+
+    @Test
+    void whenCallPricePerMeter_thenRequestFromConfig() {
+        var actual = properties.costPerMeter();
+
+        verify(currencyFactory).create("RUB");
+        assertThat(actual.amount()).isEqualByComparingTo(PER_METER);
         assertThat(actual.currency().getCode()).isEqualTo("RUB");
     }
 

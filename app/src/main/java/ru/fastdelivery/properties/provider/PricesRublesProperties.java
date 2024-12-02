@@ -18,6 +18,7 @@ public class PricesRublesProperties implements WeightPriceProvider {
 
     private BigDecimal perKg;
     private BigDecimal minimal;
+    private BigDecimal perCubMeter;
 
     @Autowired
     private CurrencyFactory currencyFactory;
@@ -25,6 +26,11 @@ public class PricesRublesProperties implements WeightPriceProvider {
     @Override
     public Price costPerKg() {
         return new Price(perKg, currencyFactory.create("RUB"));
+    }
+
+    @Override
+    public Price costPerMeter() {
+        return new Price(perCubMeter, currencyFactory.create("RUB"));
     }
 
     @Override

@@ -5,6 +5,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.fastdelivery.domain.common.currency.Currency;
 import ru.fastdelivery.domain.common.currency.CurrencyFactory;
+import ru.fastdelivery.domain.common.measurements.Height;
+import ru.fastdelivery.domain.common.measurements.Length;
+import ru.fastdelivery.domain.common.measurements.Width;
 import ru.fastdelivery.domain.common.price.Price;
 import ru.fastdelivery.domain.common.weight.Weight;
 import ru.fastdelivery.domain.delivery.pack.Pack;
@@ -30,11 +33,18 @@ class TariffCalculateUseCaseTest {
     void whenCalculatePrice_thenSuccess() {
         var minimalPrice = new Price(BigDecimal.TEN, currency);
         var pricePerKg = new Price(BigDecimal.valueOf(100), currency);
+        var pricePerMeter = new Price(BigDecimal.valueOf(100), currency);
 
         when(weightPriceProvider.minimalPrice()).thenReturn(minimalPrice);
+        when(weightPriceProvider.costPerMeter()).thenReturn(pricePerMeter);
         when(weightPriceProvider.costPerKg()).thenReturn(pricePerKg);
 
-        var shipment = new Shipment(List.of(new Pack(new Weight(BigInteger.valueOf(1200)))),
+        Length length = new Length(BigInteger.valueOf(150));
+        Width width = new Width(BigInteger.valueOf(150));
+        Height height = new Height(BigInteger.valueOf(150));
+        Weight weight = new Weight(BigInteger.valueOf(1200));
+
+        var shipment = new Shipment(List.of(new Pack(weight, length, width, height)),
                 new CurrencyFactory(code -> true).create("RUB"));
         var expectedPrice = new Price(BigDecimal.valueOf(120), currency);
 
