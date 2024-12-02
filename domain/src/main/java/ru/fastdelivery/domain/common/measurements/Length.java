@@ -15,6 +15,7 @@ public record Length(BigInteger millimeters) implements AbstractMeasure<Length> 
         if(isMoreThanLimit(millimeters)){
             throw new IllegalArgumentException("Length cannot be more than 1500 mm");
         }
+        millimeters = roundToMultipleOfFifty(millimeters);
     }
 
 

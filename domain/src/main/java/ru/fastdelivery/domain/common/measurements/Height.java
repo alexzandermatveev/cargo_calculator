@@ -16,6 +16,7 @@ public record Height(BigInteger millimeters) implements AbstractMeasure<Height> 
         if (isMoreThanLimit(millimeters)) {
             throw new IllegalArgumentException("Height cannot be more than 1500 mm");
         }
+        millimeters = roundToMultipleOfFifty(millimeters);
     }
 
     @Override

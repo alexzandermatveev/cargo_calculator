@@ -16,6 +16,7 @@ public record Width(BigInteger millimeters) implements AbstractMeasure<Width> {
         if (isMoreThanLimit(millimeters)) {
             throw new IllegalArgumentException("Width cannot be more than 1500 mm");
         }
+        millimeters = roundToMultipleOfFifty(millimeters);
     }
 
     @Override

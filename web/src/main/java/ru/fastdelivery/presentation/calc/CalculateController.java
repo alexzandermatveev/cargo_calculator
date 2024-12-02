@@ -6,10 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.fastdelivery.domain.common.currency.CurrencyFactory;
 import ru.fastdelivery.domain.common.measurements.Height;
 import ru.fastdelivery.domain.common.measurements.Length;
@@ -23,12 +20,17 @@ import ru.fastdelivery.presentation.api.response.CalculatePackagesResponse;
 import ru.fastdelivery.usecase.TariffCalculateUseCase;
 
 @RestController
-@RequestMapping("/api/v1/calculate/")
+@RequestMapping("/api/v1/calculate")
 @RequiredArgsConstructor
 @Tag(name = "Расчеты стоимости доставки")
 public class CalculateController {
     private final TariffCalculateUseCase tariffCalculateUseCase;
     private final CurrencyFactory currencyFactory;
+
+    @GetMapping()
+    public String exampleMethod(){
+        return "hello";
+    }
 
     @PostMapping
     @Operation(summary = "Расчет стоимости по упаковкам груза")
@@ -37,7 +39,8 @@ public class CalculateController {
             @ApiResponse(responseCode = "400", description = "Invalid input provided")
     })
     public CalculatePackagesResponse calculate(
-            @Valid @RequestBody CalculatePackagesRequest request) {
+            @Valid
+             @RequestBody CalculatePackagesRequest request) {
         var packs = request.packages().stream()
                 .map(pack -> new Pack(new Weight(pack.weight()),
                         new Length(pack.length()),

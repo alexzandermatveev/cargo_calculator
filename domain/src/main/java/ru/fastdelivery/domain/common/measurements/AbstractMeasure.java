@@ -17,7 +17,7 @@ public interface AbstractMeasure<T> extends Comparable<T> {
     }
 
    default boolean isMoreThanLimit(BigInteger measure){
-        return BigInteger.valueOf(1500).compareTo(measure) > 0;
+        return BigInteger.valueOf(1500).compareTo(measure) < 0;
     }
 
 
