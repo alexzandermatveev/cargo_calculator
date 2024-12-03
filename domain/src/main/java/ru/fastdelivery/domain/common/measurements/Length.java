@@ -4,15 +4,16 @@ import java.math.BigInteger;
 
 /**
  * Общий класс длины
+ *
  * @param millimeters длина в миллиметрах
  */
 public record Length(BigInteger millimeters) implements AbstractMeasure<Length> {
 
-    public Length{
+    public Length {
         if (isLessThanZero(millimeters)) {
             throw new IllegalArgumentException("Length cannot be below Zero!");
         }
-        if(isMoreThanLimit(millimeters)){
+        if (isMoreThanLimit(millimeters)) {
             throw new IllegalArgumentException("Length cannot be more than 1500 mm");
         }
         millimeters = roundToMultipleOfFifty(millimeters);

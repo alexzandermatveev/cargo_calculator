@@ -21,7 +21,7 @@ public record Shipment(
                 .reduce(Weight.zero(), Weight::add);
     }
 
-    public Volume calcVolumeAllPackages(){
+    public Volume calcVolumeAllPackages() {
         return packages.stream()
                 .map(Pack::calcVolume)
                 .reduce(Volume.getZeroVolume(), Volume::addVolume);

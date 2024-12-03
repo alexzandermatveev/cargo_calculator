@@ -6,7 +6,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.fastdelivery.domain.common.currency.CurrencyFactory;
 import ru.fastdelivery.domain.common.measurements.Height;
 import ru.fastdelivery.domain.common.measurements.Length;
@@ -19,7 +22,6 @@ import ru.fastdelivery.domain.delivery.place.DistanceCalculator;
 import ru.fastdelivery.domain.delivery.place.PlaceFactory;
 import ru.fastdelivery.domain.delivery.shipment.Shipment;
 import ru.fastdelivery.presentation.api.request.CalculatePackagesRequest;
-import ru.fastdelivery.presentation.api.request.CargoPackage;
 import ru.fastdelivery.presentation.api.response.CalculatePackagesResponse;
 import ru.fastdelivery.usecase.TariffCalculateUseCase;
 
@@ -48,13 +50,14 @@ public class CalculateController {
                         new Height(pack.height())))
                 .toList();
 
-        Departure departure = placeFactory.createDeparture(request.departure().latitude(), request.departure().longitude());
-        Destination destination = placeFactory.createDestination(request.destination().latitude(), request.destination().longitude());
-
+        Departure departure = placeFactory.createDeparture(request.departure().latitude(),
+                request.departure().longitude());
+        Destination destination = placeFactory.createDestination(request.destination().latitude(),
+                request.destination().longitude());
 
         var shipment = new Shipment(packs, currencyFactory.create(request.currencyCode()));
 
-        double distance = DistanceCalculator.calcDistance(departure,destination);
+        double distance = DistanceCalculator.calcDistance(departure, destination);
 
         var calculatedPrice = tariffCalculateUseCase.calcWithDistance(shipment, distance);
 

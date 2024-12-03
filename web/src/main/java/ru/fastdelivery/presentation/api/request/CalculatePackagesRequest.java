@@ -22,10 +22,12 @@ public record CalculatePackagesRequest(
         @NotNull
         String currencyCode,
 
-        @Schema(description = "Точка назначения", example = "{latitude: 73.398660, longitude: 55.027532}")
+        @Schema(description = "Точка назначения",
+                example = "{latitude: 73.398660, longitude: 55.027532}")
         @NotNull
         Destination destination,
-        @Schema(description = "Точка отправления", example = "{latitude: 55.446008, longitude: 65.339151}")
+        @Schema(description = "Точка отправления",
+                example = "{latitude: 55.446008, longitude: 65.339151}")
         @NotNull
         Departure departure
 ) {

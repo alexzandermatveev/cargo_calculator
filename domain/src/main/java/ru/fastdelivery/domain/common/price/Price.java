@@ -24,7 +24,8 @@ public record Price(
     }
 
     public Price multiply(BigDecimal amount) {
-        return new Price(this.amount.multiply(amount).divide(BigDecimal.ONE, 2, RoundingMode.HALF_UP), this.currency);
+        return new Price(this.amount.multiply(amount)
+                .divide(BigDecimal.ONE, 2, RoundingMode.HALF_UP), this.currency);
     }
 
     public Price max(Price price) {

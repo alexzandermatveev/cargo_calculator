@@ -1,7 +1,6 @@
 package ru.fastdelivery.usecase;
 
 import org.assertj.core.util.BigDecimalComparator;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +32,7 @@ class TariffCalculateUseCaseTest {
     Shipment shipment;
 
     @BeforeEach
-    void createShipment(){
+    void createShipment() {
         var minimalPrice = new Price(BigDecimal.TEN, currency);
         var pricePerKg = new Price(BigDecimal.valueOf(100), currency);
         var pricePerMeter = new Price(BigDecimal.valueOf(100), currency);
@@ -78,7 +77,7 @@ class TariffCalculateUseCaseTest {
 
     @Test
     @DisplayName("Расчет цены с учетом расстояния")
-    void whenCalculatePriceWithDistance_thenSuccess(){
+    void whenCalculatePriceWithDistance_thenSuccess() {
         double distance = 585_000;
 //        585000/1000/450*120 = 156, где 1000 - м в км, 450 - добавка за каждые 450км,
 //        120 - ожидаемая цена при заданном shipment (проверяется в whenCalculatePrice_thenSuccess)

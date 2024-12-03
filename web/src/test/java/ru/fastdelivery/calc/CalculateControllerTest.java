@@ -7,8 +7,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ru.fastdelivery.ControllerTest;
-
-import ru.fastdelivery.domain.common.currency.Currency;
 import ru.fastdelivery.domain.common.currency.CurrencyFactory;
 import ru.fastdelivery.domain.common.price.Price;
 import ru.fastdelivery.domain.delivery.departure.Departure;
@@ -24,7 +22,8 @@ import java.math.BigInteger;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.when;
 
 class CalculateControllerTest extends ControllerTest {
@@ -38,7 +37,7 @@ class CalculateControllerTest extends ControllerTest {
     PlaceFactory placeFactory;
 
     @BeforeEach
-    void makeTestPlaceFactory(){
+    void makeTestPlaceFactory() {
         when(placeFactory.createDeparture(55.446008, 65.339151)).thenReturn(new Departure(55.446008, 65.339151));
         when(placeFactory.createDestination(62.398660, 55.027532)).thenReturn(new Destination(62.398660, 55.027532));
     }

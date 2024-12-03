@@ -14,17 +14,14 @@ import ru.fastdelivery.usecase.WeightPriceProvider;
  */
 @Configuration
 public class Beans {
-
     @Bean
     public PlaceFactory placeConstraints(CoordinatesLimitProperties coordinatesLimitProperties){
         return new PlaceFactory(coordinatesLimitProperties);
     }
-
     @Bean
     public CurrencyFactory currencyFactory(CurrencyPropertiesProvider currencyProperties) {
         return new CurrencyFactory(currencyProperties);
     }
-
     @Bean
     public TariffCalculateUseCase tariffCalculateUseCase(WeightPriceProvider weightPriceProvider) {
         return new TariffCalculateUseCase(weightPriceProvider);

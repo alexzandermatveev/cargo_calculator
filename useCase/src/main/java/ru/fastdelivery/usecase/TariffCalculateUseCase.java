@@ -32,9 +32,11 @@ public class TariffCalculateUseCase {
         int eachKilometersWhenRaisePrice = 450;
         double distanceInKilometers = distanceInMeters / 1000;
         Price regularPrice = calc(shipment);
-        return distanceInKilometers > eachKilometersWhenRaisePrice ?
-                regularPrice.multiply(new BigDecimal(distanceInKilometers / eachKilometersWhenRaisePrice)) :
-                regularPrice;
 
+        if (distanceInKilometers > eachKilometersWhenRaisePrice) {
+            return regularPrice.multiply(new BigDecimal(distanceInKilometers / eachKilometersWhenRaisePrice));
+        } else {
+            return regularPrice;
+        }
     }
 }

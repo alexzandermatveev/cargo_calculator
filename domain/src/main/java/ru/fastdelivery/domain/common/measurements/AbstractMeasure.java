@@ -5,7 +5,7 @@ import java.math.BigInteger;
 public interface AbstractMeasure<T> extends Comparable<T> {
 
 
-    default BigInteger roundToMultipleOfFifty(BigInteger input){
+    default BigInteger roundToMultipleOfFifty(BigInteger input) {
         int remainder = input.intValue() % 50;
         return remainder == 0 ? input :
                 input.add(BigInteger.valueOf(50 - remainder));
@@ -16,7 +16,7 @@ public interface AbstractMeasure<T> extends Comparable<T> {
         return BigInteger.ZERO.compareTo(measure) > 0;
     }
 
-   default boolean isMoreThanLimit(BigInteger measure){
+    default boolean isMoreThanLimit(BigInteger measure) {
         return BigInteger.valueOf(1500).compareTo(measure) < 0;
     }
 
