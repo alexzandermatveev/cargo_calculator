@@ -49,7 +49,7 @@ class PricesRublesPropertiesTest {
 
     @Test
     void whenCallPricePerMeter_thenRequestFromConfig() {
-        var actual = properties.costPerMeter();
+        var actual = properties.costPerCubMeter();
 
         verify(currencyFactory).create("RUB");
         assertThat(actual.amount()).isEqualByComparingTo(PER_METER);

@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.fastdelivery.domain.common.currency.CurrencyFactory;
 import ru.fastdelivery.domain.common.currency.CurrencyPropertiesProvider;
+import ru.fastdelivery.domain.delivery.place.PlaceFactory;
+import ru.fastdelivery.properties.provider.CoordinatesLimitProperties;
 import ru.fastdelivery.usecase.TariffCalculateUseCase;
 import ru.fastdelivery.usecase.WeightPriceProvider;
 
@@ -12,6 +14,11 @@ import ru.fastdelivery.usecase.WeightPriceProvider;
  */
 @Configuration
 public class Beans {
+
+    @Bean
+    public PlaceFactory placeConstraints(CoordinatesLimitProperties coordinatesLimitProperties){
+        return new PlaceFactory(coordinatesLimitProperties);
+    }
 
     @Bean
     public CurrencyFactory currencyFactory(CurrencyPropertiesProvider currencyProperties) {

@@ -7,6 +7,11 @@ currency:
 cost:
   rub:
     perKg: 400
-#    стоимость за кубический метр
+    #    стоимость за кубический метр
     perCubMeter: 500
     minimal: 350
+space:
+  latitudeMin: 45
+  latitudeMax: 65
+  longitudeMin: 30
+  longitudeMax: 96

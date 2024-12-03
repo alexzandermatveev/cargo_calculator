@@ -6,6 +6,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import ru.fastdelivery.config.Config;
 import ru.fastdelivery.domain.common.currency.CurrencyPropertiesProvider;
+import ru.fastdelivery.domain.delivery.place.PlaceConstraints;
 
 @SpringBootTest(classes = Config.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class ControllerTest {
@@ -15,4 +16,7 @@ public abstract class ControllerTest {
 
     @MockBean
     protected CurrencyPropertiesProvider currencyPropertiesProvider;
+
+    @MockBean
+    protected PlaceConstraints placeConstraints;
 }

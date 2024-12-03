@@ -26,4 +26,5 @@ public record CalculatePackagesResponse(
     private static boolean currencyIsNotEqual(Price priceLeft, Price priceRight) {
         return !priceLeft.currency().equals(priceRight.currency());
     }
+
 }

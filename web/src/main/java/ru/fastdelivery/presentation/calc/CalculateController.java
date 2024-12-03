@@ -12,7 +12,11 @@ import ru.fastdelivery.domain.common.measurements.Height;
 import ru.fastdelivery.domain.common.measurements.Length;
 import ru.fastdelivery.domain.common.measurements.Width;
 import ru.fastdelivery.domain.common.weight.Weight;
+import ru.fastdelivery.domain.delivery.departure.Departure;
+import ru.fastdelivery.domain.delivery.destination.Destination;
 import ru.fastdelivery.domain.delivery.pack.Pack;
+import ru.fastdelivery.domain.delivery.place.DistanceCalculator;
+import ru.fastdelivery.domain.delivery.place.PlaceFactory;
 import ru.fastdelivery.domain.delivery.shipment.Shipment;
 import ru.fastdelivery.presentation.api.request.CalculatePackagesRequest;
 import ru.fastdelivery.presentation.api.request.CargoPackage;
@@ -26,11 +30,7 @@ import ru.fastdelivery.usecase.TariffCalculateUseCase;
 public class CalculateController {
     private final TariffCalculateUseCase tariffCalculateUseCase;
     private final CurrencyFactory currencyFactory;
-
-    @GetMapping()
-    public String exampleMethod(){
-        return "hello";
-    }
+    private final PlaceFactory placeFactory;
 
     @PostMapping
     @Operation(summary = "Расчет стоимости по упаковкам груза")
@@ -40,7 +40,7 @@ public class CalculateController {
     })
     public CalculatePackagesResponse calculate(
             @Valid
-             @RequestBody CalculatePackagesRequest request) {
+            @RequestBody CalculatePackagesRequest request) {
         var packs = request.packages().stream()
                 .map(pack -> new Pack(new Weight(pack.weight()),
                         new Length(pack.length()),
@@ -48,8 +48,16 @@ public class CalculateController {
                         new Height(pack.height())))
                 .toList();
 
+        Departure departure = placeFactory.createDeparture(request.departure().latitude(), request.departure().longitude());
+        Destination destination = placeFactory.createDestination(request.destination().latitude(), request.destination().longitude());
+
+
         var shipment = new Shipment(packs, currencyFactory.create(request.currencyCode()));
-        var calculatedPrice = tariffCalculateUseCase.calc(shipment);
+
+        double distance = DistanceCalculator.calcDistance(departure,destination);
+
+        var calculatedPrice = tariffCalculateUseCase.calcWithDistance(shipment, distance);
+
         var minimalPrice = tariffCalculateUseCase.minimalPrice();
         return new CalculatePackagesResponse(calculatedPrice, minimalPrice);
     }

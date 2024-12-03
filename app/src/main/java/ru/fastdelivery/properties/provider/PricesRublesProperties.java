@@ -29,7 +29,7 @@ public class PricesRublesProperties implements WeightPriceProvider {
     }
 
     @Override
-    public Price costPerMeter() {
+    public Price costPerCubMeter() {
         return new Price(perCubMeter, currencyFactory.create("RUB"));
     }
 
