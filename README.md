@@ -17,7 +17,7 @@
 Проект использует синтаксис Java 17. Для локального запуска вам потребуется
 установленный JDK 17.
 
-### Используя среду разработки IDEA
+### Используя среду разработки
 
 Откройте проект. Дождитесь индексации. Создайте конфигурацию запуска
 или запустите main метод класса [app/src/main/java/ru/fastdelivery/Main.java](app/src/main/java/ru/fastdelivery/Main.java)
@@ -41,7 +41,7 @@ docker build -t ru.fastdelivery:latest .
 Запуск контейнера:
 
 ```shell
-docker run -p 8081:8080 ru.fastdelivery:latest
+docker run -p 8081:8081 ru.fastdelivery:latest
 ```
 
 ### Используя JAR
@@ -57,16 +57,6 @@ docker run -p 8081:8080 ru.fastdelivery:latest
 ```shell
 java -jar app/target/app-1.0-SNAPSHOT.jar
 ```
-
-## Тестирование кода
-
-### Запуск тестов
-
-Используя встроенный Maven Wrapper запустите
-фазу тестов, при этом будет произведена проверка
-стиля кода (checkstyle). Отчеты по checkstyle
-найдете в файле
-[target/site/checkstyle-aggregate.html](target/site/checkstyle-aggregate.html) 
 
 Linux/macOs:
 
@@ -112,5 +102,22 @@ http://localhost:8080/swagger-ui/index.html
 В модуле находится контроллеры, этот модуль единственный общается с
 внешним миром. Содержит зависимости Spring Boot и `domain`, `useCase`.
 
-> [!NOTE]
-> Изменять зависимости между модулями не допускается
+## Пояснения к application.yml
+
+В файл конфигурации вынесены следующие параметры:
+1. <b>Валюта [currency.available]</b> <br> Здесь можно указать все валюты, которые можно применить в последующих расчетах в виде списка.
+2. <b>Стоимость перевозки [cost.rub]</b>
+   1. Удельная по массе, кг [perKg]
+   2. Удельная по объему, м<sup>3</sup> [perCubMeter]
+   3. Минимальная [minimal]
+3. <b>Координаты [space]</b> <br> Для указания места отправления и получения указываются соответсвующее классы с параметрами широты (latitude) и долготы (longitude). 
+Расчет доставки будет производиться только для точек, попадающие в указанные пределы.
+   1. Минимальная широта [latitudeMin]
+   2. Максимальная широта [latitudeMax]
+   3. Минимальная долгота [longitudeMin]
+   4. Максимальная долгота [longitudeMax]
+
+
+
+
+
